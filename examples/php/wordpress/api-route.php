@@ -1,9 +1,9 @@
-function id_service() {
+function cookie_extension_service() {
   $sp = $_COOKIE['sp'] ?? null;
-  $spIdService = $_COOKIE['spIdService'] ?? null;
+  $spCookieExtensionService = $_COOKIE['spCookieExtensionService'] ?? null;
   /* bumpExpiry is a placeholder method that returns the expiration time you require the network_userid to persist. */
   $expiration = bumpExpiry();
-  $networkUserId = $sp ?? $spIdService ?? gen_uuid4();
+  $networkUserId = $sp ?? $spCookieExtensionService ?? gen_uuid4();
   /* In this example the domain will be the eTLD+1 of the website. */
   $domain = 'snowplow.io';
 
@@ -19,7 +19,7 @@ function id_service() {
     'samesite' => 'None',
   );
   setcookie('sp', $networkUserId, $cookie_options);
-  setcookie('spIdService', $networkUserId, $cookie_options);
+  setcookie('spCookieExtensionService', $networkUserId, $cookie_options);
 
   /* The response needs to return a 200 (OK) status code but any response payload is not necessary. */
   return json_encode(['Ok' => 200]);
