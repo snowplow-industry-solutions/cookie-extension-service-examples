@@ -2,10 +2,10 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<{ Ok: number }>
 ) {
-  const { sp, spIdService } = req.cookies;
+  const { sp, spCookieExtensionService } = req.cookies;
   /* bumpExpiry is a placeholder method that returns the expiration time you require the network_userid to persist. */
   const expiration = bumpExpiry();
-  const networkUserId = sp || spIdService || uuidv4();
+  const networkUserId = sp || spCookieExtensionService || uuidv4();
   /* In this example the domain will be the eTLD+1 of the website. */
   const domain = "snowplow.io";
 
@@ -13,7 +13,7 @@ export default function handler(
     /*
      * The cookie header attributes should have exactly the same values as the ones set on the collector configuration.
      */
-    `spIdService=${networkUserId}; Expires=${expiration.toUTCString()}; Domain=${domain}; Path=/; Secure; SameSite=None; httpOnly;`,
+    `spCookieExtensionService=${networkUserId}; Expires=${expiration.toUTCString()}; Domain=${domain}; Path=/; Secure; SameSite=None; httpOnly;`,
     `sp=${networkUserId}; Expires=${expiration.toUTCString()}; Domain=${domain}; Path=/; Secure; SameSite=None; httpOnly;`,
   ]);
 
